@@ -31,6 +31,6 @@ def Application(environ, start_response):
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
     app = Middleware(Application)
-    _server = make_server('localhost', 8000, app)
+    _server = make_server('localhost', 8000, Middleware(app))
     print ("Serving localhost on port 8000...")
     _server.serve_forever()
