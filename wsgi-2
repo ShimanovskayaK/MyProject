@@ -1,0 +1,40 @@
+# Импорт необходимых библиотек
+from jinja2 import Template, FileSystemLoader, Environment
+from wsgiref.simple_server import make_server
+
+e_nv = Environment(loader=FileSystemLoader('.'))
+vvod1 = '<div class='top'>Middleware TOP</div>\n'
+vvod2 = '\n<div class='botton'>Middleware BOTTOM</div>'
+st = '200 OK'
+start_response = [('Content-type', 'text/html')]
+
+class Middleware(object):
+    def __init__(self, app):
+        self.app = app
+    def __call__(self, environ, start_response):
+        for lists in self.app(environ, start_response):
+            text = lists
+            if text.find('<body') != -1:
+                yield text.encode()
+                yield "<div class='top'>Middleware TOP</div>".encode()
+            elif text.find('</body>') != -1:
+                yield "<div class='botton'>Middleware BOTTOM</div>".encode()
+                yield text.encode()
+            else:
+                yield text.encode()
+     def Application(environ, start_response):
+    filepath = environ['PATH_INFO']
+    if  (filepath == '/' or filepath == '/index.html' or filepath == '/about/aboutme.html'):
+        file = open('.' + filepath, 'r')
+        result = []
+        for line in file:
+            result.append(line)
+        file.close()
+        start_response('200 OK', [('Content-type', 'text/HTML')])
+        return result
+    else:
+        start_response('404 Not Found', [("Content-Type", "text/html")])
+        return ''.encode()
+
+if __name__ == '__main__':    
+    make_server(Middleware(Application), host='localhost', port=8000).serve_forever()   
