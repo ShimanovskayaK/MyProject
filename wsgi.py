@@ -5,7 +5,7 @@ class Middleware(object):
     def call(self, environ, start_response):
         for lists in self.app(environ, start_response):
             text = lists
-            if text.find('<body') != -1:
+            if text.find('<body>') != -1:
                 yield text.encode()
                 yield "<div class='top'>Middleware TOP</div>".encode()
             elif text.find('</body>') != -1:
