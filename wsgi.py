@@ -1,8 +1,8 @@
 class Middleware(object):
-    def __init__(self, app):
+    def init(self, app):
         self.app = app
         
-    def __call__(self, environ, start_response):
+    def call(self, environ, start_response):
         for lists in self.app(environ, start_response):
             text = lists
             if text.find('<body') != -1:
@@ -28,7 +28,7 @@ def Application(environ, start_response):
         start_response('404 Not Found', [("Content-Type", "text/html")])
         return ''.encode()
 
-if __name__ == '__main__':
+if __name__ == 'main':
     from wsgiref.simple_server import make_server
     app = Middleware(Application)
     _server = make_server('localhost', 8000, Middleware(app))
