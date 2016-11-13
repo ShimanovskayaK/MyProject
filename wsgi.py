@@ -28,9 +28,9 @@ def Application(environ, start_response):
         start_response('404 Not Found', [("Content-Type", "text/html")])
         return ''.encode()
 
-if __name__ == 'main':
+if name == 'main':
     from wsgiref.simple_server import make_server
     app = Middleware(Application)
-    _server = make_server('localhost', 8000, Middleware(app))
+    server = make_server('localhost', 8000, Middleware(app))
     print ("Serving localhost on port 8000...")
-    _server.serve_forever()
+    server.serve_forever()
