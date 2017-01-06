@@ -1,13 +1,16 @@
 # Импорт необходимых библиотек
-from jinja2 import Template, FileSystemLoader, Environment
+from wsgi-2 import Template, FileSystemLoader, Environment
 from wsgiref.simple_server import make_server
 
+
+# Наш интерфейс
 e_nv = Environment(loader=FileSystemLoader('.'))
 vvod1 = '<div class='top'>Middleware TOP</div>\n'
 vvod2 = '\n<div class='botton'>Middleware BOTTOM</div>'
 st = '200 OK'
 start_response = [('Content-type', 'text/html')]
 
+# Сам скрипт выполнения
 class Middleware(object):
     def __init__(self, app):
         self.app = app
@@ -36,5 +39,6 @@ class Middleware(object):
         start_response('404 Not Found', [("Content-Type", "text/html")])
         return ''.encode()
 
+# Вызов скрипта
 if __name__ == '__main__':    
     make_server(Middleware(Application), host='localhost', port=8000).serve_forever()   
