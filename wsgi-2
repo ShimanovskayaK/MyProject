@@ -1,5 +1,5 @@
 # Импорт необходимых библиотек
-from wsgi-2 import Template, FileSystemLoader, Environment
+from wsgi-2 import OS, sys
 from wsgiref.simple_server import make_server
 
 
