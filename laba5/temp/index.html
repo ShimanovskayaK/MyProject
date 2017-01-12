@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+       <p> 
+          <a href="file:///home/karolina/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/MyProject/laba5/temp/about/aboutme.html">абсолютная ссылка</a> 
+       </p>
+       <p>
+         <a href="about/aboutme.html">относительная ссылка</a> 
+       </p>
+{% endblock %}	
+
+Base.html
+
+<!doctype html>
+<html lang="en">
+
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <title>Home Work #5 - {% block title %}{% endblock %}</title>
+    {% endblock %}
+  </head>
+
+  <body>
+    <div id="content">{% block content %}{% endblock %}</div>
+  </body>
+
+</html>
